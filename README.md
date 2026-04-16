@@ -32,26 +32,6 @@ The system addresses the critical gap in digital resources for Burmese literatur
 | Total| | | 6769 |
 
 
-🏗️ System Architecture
-
-
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   User Query    │───▶│  Query Encoding │───▶│  FAISS IVF      │
-│   (Burmese)     │    │  (LaBSE)        │    │  Cluster Search │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                                                       │
-                                                       ▼
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Gradio UI     │◀───│  Output Cleaning│◀───│  Cosine Similarity│
-│   Display       │    │  & Formatting   │    │  Reranking       │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         ▲                      ▲                       │
-         │                      │                       ▼
-         │              ┌─────────────────┐    ┌─────────────────┐
-         └──────────────│  Gemma-3-27B-IT │◀───│  Top-10 Chunks  │
-                        │  Generation     │    │  Selection      │
-                        └─────────────────┘    └─────────────────┘
-
 
 🔧 Technical Stack
 
@@ -75,6 +55,7 @@ The system addresses the critical gap in digital resources for Burmese literatur
 
 
 🚀 Setup Instructions
+
 Step 1: Prepare Your Environment
 Upload MyanLitBot.ipynb to Google Colab
 Go to Runtime → Change runtime type → Select T4 GPU
@@ -118,6 +99,7 @@ Subsequent runs will load existing indexes instantly.
 
 
 💻 How to Use
+
 1. Launch the Interface
 After running all cells, you'll see a Gradio interface with:
 
@@ -137,6 +119,7 @@ Theme	အချစ်ကို ဘယ်လိုဖော်ပြသလဲ	How
 Setting	ဝတ္ထုပါ နေရာဒေသကို မည်သို့ပုံဖော်ထားသနည်း	How is the setting described?
 Style	စာရေးသူ၏ ရေးဟန်ထူးခြားချက်က ဘာလဲ	What is distinctive about the author's writing style?
 
+
 3. Interpret Results
 Each response includes:
 
@@ -148,10 +131,12 @@ Each response includes:
 
 🔧 How It Works (Internal Logic)
 
+
 Text Preprocessing
-# Sentence-aware chunking with overlap
-# Splits at Burmese punctuation (။, !, ?)
-# Maintains context with sentence overlap
+Sentence-aware chunking with overlap
+Splits at Burmese punctuation (။, !, ?)
+Maintains context with sentence overlap
+
 
 Indexing
 Each novel gets its own FAISS IVF index
@@ -165,10 +150,12 @@ IVF cluster search (fast approximate)
 Cosine similarity reranking (precision refinement)
 Top 10 most relevant chunks selected
 
+
 Generation
 Strict prompt engineering with semantic boundaries
 Gemma-3-27B-IT generates academic Burmese analysis
 Output cleaned: duplicates removed, incomplete sentences filtered
+
 
 📊 Performance & Evaluation
 The system was tested across three genres with excellent results:
@@ -179,22 +166,13 @@ Biography	Highest precision	Fact-based retrieval excels with LaBSE
 Social Realism	Strong social context	Accurately captures identity conflicts
 Response Time: Average 5-8 seconds per query
 
-📁 Project Files Included
-text
-MyanLitBot.zip
-├── MyanLitBot.ipynb              # Main Colab notebook (run this)
-├── README.md                      # This file (instructions)
-├── MyanLitBot's PowerPoint.pptx   # Presentation slides
-├── MyanLitBot's Project Book.docx # Detailed project report
-├── MyanLitBot's Proposal.docx     # Original project proposal
-└── requirements.txt                # Python dependencies
-Note: Novel text files are NOT included due to copyright. You must provide your own .txt files.
 
 ⚠️ Important Notes
 First-Time Setup
 First run takes 3-5 minutes to process novels
 Subsequent runs load instantly from Drive cache
 Ensure stable internet connection for API calls
+
 
 Common Issues & Solutions
 Issue	Solution
@@ -203,11 +181,13 @@ Issue	Solution
 Out of memory	Restart runtime (Runtime → Restart runtime)
 Slow response	Check internet speed; API calls vary
 
+
 Limitations
 Currently supports 5 novels (limited by digitized text)
 Burmese & English only
 Descriptive analysis only (no cross-novel comparison)
 Requires internet connection (API-based)
+
 
 🔮 Future Enhancements
 Expand corpus to include poetry and short stories
@@ -215,6 +195,7 @@ Add cross-novel comparative analysis
 Develop offline version (quantized models)
 Mobile-responsive UI
 Fine-tuned Burmese literary model
+
 
 👥 Project Team
 Name	Student ID	Role
